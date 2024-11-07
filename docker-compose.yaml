@@ -1,0 +1,33 @@
+services:
+  nginx-slim-deploy:
+    container_name: nginx-slim-deploy
+    build:
+      context: .
+      dockerfile: ./docker/nginx/Dockerfile
+    ports:
+      - '80:80'
+    volumes:
+    - ./docker/nginx/nginx.conf:/etc/nginx/nginx.conf
+    - ./docker/nginx/sites-available:/etc/nginx/sites-available
+    - ./docker/nginx/conf.d:/etc/nginx/conf.d
+    - ./docker/nginx/letsencrypt:/etc/letsencrypt
+    - ./src:/var/www
+    networks:
+    - net_php_slim
+    depends_on:
+    - php-slim-deploy
+
+  php-slim-deploy:
+    container_name: php-slim-deploy
+    build:
+      context: .
+      dockerfile: ./docker/php/Dockerfile
+    volumes:
+    - ./src:/var/www
+    - ./docker/php/php.ini:/usr/local/etc/php/conf.d/php-ini-develope.ini
+    networks:
+    - net_php_slim
+
+networks:
+  net_php_slim:
+    driver: bridge
