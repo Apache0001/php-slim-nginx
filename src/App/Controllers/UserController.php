@@ -6,6 +6,14 @@ use App\Support\File;
 use Psr\Http\Message\ResponseInterface as Response;
 use Psr\Http\Message\ServerRequestInterface as Request;
 
+/**
+ * Class UserController
+ * 
+ * @package App\Controllers
+ * 
+ * 
+ * @return Response
+ */
 class UserController
 {
     /**
@@ -21,9 +29,68 @@ class UserController
 
         $response->getBody()->write($payload);
         
-        $response->withHeader('Content-Type', 'application/json')
+        return $response
+            ->withHeader('Content-Type', 'application/json')
+            ->withStatus(200);
+        
+    }
+
+    public function show(
+        Request $request, 
+        Response $response
+    ) {
+        return $response
+            ->withHeader('Content-Type', 'application/json')
+            ->withStatus(200);
+    }
+
+    /**
+     * Update
+     * @param Request $request
+     * @param Response $response
+     * @return Response
+     */
+    public function update(Request $request, Response $response): Response
+    {
+        $data = array('name' => 'Rob', 'age' => 40);
+        $payload = json_encode($data);
+
+        $response->getBody()->write($payload);
+        
+        return $response
+            ->withHeader('Content-Type', 'application/json')
             ->withStatus(201);
-        return $response;
+    }
+
+    /**
+     * Insert
+     * @param Request $request
+     * @param Response $response
+     * @return Response
+     */
+    public function insert(
+        Request $request, 
+        Response $response
+    ){
+        return $response
+            ->withHeader('Content-Type', 'application/json')
+            ->withStatus(201);
+    }
+
+    /**
+     * Delete
+     * @param Request $request
+     * @param Response $response
+     * @return Response
+     */
+    public function delete(
+        Request $request, 
+        Response $response
+    ){ 
+        return $response
+            ->withHeader('Content-Type', 'application/json')
+            ->withStatus(201);
+
     }
 
     /**
